@@ -1,0 +1,22 @@
+﻿<Window x:Class="Sandox_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Sandox_WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="662.996">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="635" Orientation="Vertical">
+            <StackPanel Height="36" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+                <Label Content="Токен RM"/>
+                <TextBox x:Name="accessTokenRM" Width="250" />
+                <Label Content="Проект в RM"/>
+                <TextBox x:Name="redmineIssue" Width="150" />
+            </StackPanel>
+            <Button Content="Анализировать дашборд" Width="150" Height="36" Margin="5" Click="Button_Click_1"/>
+            <ListBox Height="308" x:Name="IssueList"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
