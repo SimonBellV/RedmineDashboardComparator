@@ -14,7 +14,11 @@
                 <Label Content="Проект в RM"/>
                 <TextBox x:Name="redmineIssue" Width="150" />
             </StackPanel>
-            <Button Content="Анализировать дашборд" Width="150" Height="36" Margin="5" Click="Button_Click_1"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <CheckBox x:Name="ParentCB" VerticalAlignment="Center" IsChecked="True" Content="Проверка на родительскую задачу"/>
+                <Button Content="Анализировать дашборд" Width="150" Height="36" Margin="5" Click="Button_Click_1"/>
+                <CheckBox x:Name="ExistCB" VerticalAlignment="Center" IsChecked="True" Content="Проверка на присутствие задачи"/>
+            </StackPanel>
             <ListBox Height="308" x:Name="IssueList"/>
         </StackPanel>
 

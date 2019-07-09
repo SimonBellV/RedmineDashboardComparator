@@ -11,8 +11,9 @@ namespace Sandox_WPF
     {
         private string accessToken;
         private NameValueCollection parameters;
+        private string prevIssue;
         public MainWindow()
-        {            
+        {
             InitializeComponent();
         }
 
@@ -29,7 +30,7 @@ namespace Sandox_WPF
                         if (childI.Children != null)
                             BuildRedmineTree(ref childI, ref leaf, ref manager);
                     }
-                    catch (Redmine.Net.Api.Exceptions.ForbiddenException exp) { }                    
+                    catch (Redmine.Net.Api.Exceptions.ForbiddenException exp) { }
                 }
         }
 
@@ -67,30 +68,35 @@ namespace Sandox_WPF
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            accessToken = accessTokenRM.Text;
-            parameters = new NameValueCollection { { RedmineKeys.INCLUDE, RedmineKeys.CHILDREN } };
-            try
-            {
-                RedmineManager manager = new RedmineManager("https://redmine.minsvyazdnr.ru", accessToken);
-                if (manager.GetObject<Issue>(redmineIssue.Text, parameters) != null)
+            if (!ParentCB.IsChecked.Value && !ExistCB.IsChecked.Value)
+                MessageBox.Show("Выберите что-то хотите проанализировать!");
+            else {                
+                accessToken = accessTokenRM.Text;
+                parameters = new NameValueCollection { { RedmineKeys.INCLUDE, RedmineKeys.CHILDREN } };
+                try
                 {
-                    Issue issue = manager.GetObject<Issue>(redmineIssue.Text, parameters);
-                    string description = issue.Description;
-                    HtmlDocument parsedDescription = new HtmlDocument();
-                    parsedDescription.LoadHtml(description);
-                    HtmlNodeCollection childs = parsedDescription.DocumentNode.ChildNodes;
-                    TreeNode<string> treeRM = new TreeNode<string>("root");
-                    BuildRedmineTree(ref issue, ref treeRM, ref manager);
-                    TreeNode<string> treeDashboard = new TreeNode<string>("root");
-                    BuildDashboardTree(ref childs, ref treeDashboard);
-                    IssueList.Items.Clear();
-                    CompareTrees(treeRM, treeDashboard);
+                    RedmineManager manager = new RedmineManager("https://redmine.minsvyazdnr.ru", accessToken);
+                    if (manager.GetObject<Issue>(redmineIssue.Text, parameters) != null)
+                    {
+                        Issue issue = manager.GetObject<Issue>(redmineIssue.Text, parameters);
+                        string description = issue.Description;
+                        HtmlDocument parsedDescription = new HtmlDocument();
+                        parsedDescription.LoadHtml(description);
+                        HtmlNodeCollection childs = parsedDescription.DocumentNode.ChildNodes;
+                        TreeNode<string> treeRM = new TreeNode<string>("root");
+                        BuildRedmineTree(ref issue, ref treeRM, ref manager);
+                        TreeNode<string> treeDashboard = new TreeNode<string>("root");
+                        BuildDashboardTree(ref childs, ref treeDashboard);
+                        IssueList.Items.Clear();
+                        CompareTrees(treeRM, treeDashboard);
+                    }
+                    else
+                        MessageBox.Show("Задача не найдена!");
                 }
-                else
-                    MessageBox.Show("Задача не найдена!");
-            }
-            catch (Exception exp) {
-                MessageBox.Show("Возникла непредвиденная ошибка!\n" + exp);
+                catch (Exception exp)
+                {
+                    MessageBox.Show("Возникла непредвиденная ошибка!\n" + exp);
+                }
             }
         }
 
@@ -105,11 +111,11 @@ namespace Sandox_WPF
                     {
                         /*if (compareTree.Level != node.Level)
                             IssueList.Items.Add("Задача №" + node.Data + " не на своем уровне иерархии, верный " + node.Level + ", а показан " + compareTree.Level);*/
-                        if (compareTree.Parent.ToString() != node.Parent.ToString())
+                        if (compareTree.Parent.ToString() != node.Parent.ToString() && ParentCB.IsChecked.Value)
                             IssueList.Items.Add("Задача №" + node.Data + " отображена с неверным родителем, верный №" + node.Parent.Data + ", а показан №" + compareTree.Parent.Data);
                     }
                 }
-                else
+                else if (ExistCB.IsChecked.Value)
                     IssueList.Items.Add("Задача №" + node.Data + " не найдена");
             }
         }
