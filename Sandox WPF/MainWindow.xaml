@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sandox_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="662.996">
+        Title="Redmine Dashboard Comparator" Height="450" Width="662.996" ResizeMode="NoResize">
     <Grid>
         <StackPanel HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="635" Orientation="Vertical">
             <StackPanel Height="36" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
