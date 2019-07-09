@@ -10,16 +10,19 @@
         <StackPanel HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="635" Orientation="Vertical">
             <StackPanel Height="36" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
                 <Label Content="Токен RM"/>
-                <TextBox x:Name="accessTokenRM" Width="250" />
+                <TextBox VerticalContentAlignment="Center" x:Name="accessTokenRM" Width="250" />
                 <Label Content="Проект в RM"/>
-                <TextBox x:Name="redmineIssue" Width="150" />
+                <TextBox VerticalContentAlignment="Center" x:Name="redmineIssue" Width="150" />
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <CheckBox x:Name="ParentCB" VerticalAlignment="Center" IsChecked="True" Content="Проверка на родительскую задачу"/>
-                <Button Content="Анализировать дашборд" Width="150" Height="36" Margin="5" Click="Button_Click_1"/>
-                <CheckBox x:Name="ExistCB" VerticalAlignment="Center" IsChecked="True" Content="Проверка на присутствие задачи"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="99,0,32,0" Width="504">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="5">
+                    <CheckBox x:Name="ExistCB" VerticalAlignment="Center" IsChecked="True" Content="Проверка на присутствие задачи" Margin="5"/>
+                    <CheckBox x:Name="ParentCB" VerticalAlignment="Center" IsChecked="True" Content="Проверка на родительскую задачу" Margin="5"/>
+                </StackPanel>
+                <Button Margin="20, 0, 0, 0" Content="txt" Width="50" Height="36" HorizontalAlignment="Right" Click="Button_Click"/>
+                <Button Margin="40, 0, 0, 0" Content="Анализировать дашборд" Width="150" Height="36" Click="Button_Click_1" HorizontalAlignment="Right"/>
             </StackPanel>
-            <ListBox Height="308" x:Name="IssueList"/>
+            <ListBox Height="308" x:Name="IssueList" MouseDoubleClick="IssueList_MouseDoubleClick"/>
         </StackPanel>
 
     </Grid>

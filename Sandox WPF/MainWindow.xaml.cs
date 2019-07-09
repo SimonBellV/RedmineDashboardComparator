@@ -4,6 +4,7 @@ using Redmine.Net.Api;
 using Redmine.Net.Api.Types;
 using HtmlAgilityPack;
 using System;
+using System.IO;
 
 namespace Sandox_WPF
 {
@@ -117,6 +118,28 @@ namespace Sandox_WPF
                 }
                 else if (ExistCB.IsChecked.Value)
                     IssueList.Items.Add("Задача №" + node.Data + " не найдена");
+            }
+        }
+
+        private void IssueList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Clipboard.SetText(IssueList.SelectedItem.ToString());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (IssueList.Items.Count == 0 || redmineIssue.Text == null || redmineIssue.Text == "")
+            {
+                MessageBox.Show("Не удалось сохранить файл!");
+            }
+            else
+            {
+                using (StreamWriter writetext = new StreamWriter(redmineIssue.Text + ".txt"))
+                {
+                    foreach(var item in IssueList.Items)
+                        writetext.WriteLine(item);
+                }
+                MessageBox.Show("Файл успешно сохранен");
             }
         }
     }
